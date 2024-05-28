@@ -5,31 +5,24 @@ import 'package:projectassignment/src/models/product.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-enum SortCriteria { PriceLowToHigh, PriceHighToLow, Rating, Alphabetical }
-
 class ProductController extends GetxController {
   static ProductController get instance => Get.find();
 
   /// Variables
   final isLoading = false.obs;
   final categories = [
-    'tablets',
-    'sports-accessories',
-    'mobile-accessories',
-    'beauty',
-    'fragrances',
-    'home-decoration',
-    'groceries',
-    'womens-dresses',
-    'skin-care',
-    'vehicle',
+    'Smartphones',
+    'Laptops',
+    'Home-Decoration',
+    'Groceries',
+    'Fragrances',
+    'Skin-care',
+    'Beauty',
   ];
-  var selectedCategory = 'tablets'.obs;
+  var selectedCategory = 'Smartphones'.obs;
   final searchQuery = ''.obs;
 
   List<ProductModel> products = <ProductModel>[].obs;
-  List<ProductModel> searchedproduct = <ProductModel>[].obs;
-  List<ProductModel> sortedProduct = <ProductModel>[].obs;
   final DropDownController dropDownController = Get.put(DropDownController());
 
   @override
@@ -70,7 +63,7 @@ class ProductController extends GetxController {
   }
 
   List<ProductModel> get filteredProducts {
-    return sortedProduct.where((product) => product.category == selectedCategory.value).toList();
+    return products.where((product) => product.category == selectedCategory.value).toList();
   }
   void searchAndSortProducts(String query) {
     searchQuery.value = query;
@@ -105,7 +98,7 @@ class ProductController extends GetxController {
         sortedList.sort((a, b) => a.id.compareTo(b.id));
         break;
     }
-    sortedProduct.assignAll(sortedList);
+    products.assignAll(sortedList);
   }
   void changeCategory(String category) {
     selectedCategory.value = category;

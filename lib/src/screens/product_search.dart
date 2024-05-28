@@ -9,8 +9,6 @@ import '../controller/drop_down_controller.dart';
 
 class ProductSearch extends StatelessWidget {
   final ProductController productController = Get.find();
-  final DropDownController dropDownController = Get.find();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

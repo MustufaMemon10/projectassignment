@@ -20,7 +20,7 @@ class App extends StatelessWidget {
         Get.put(ProductController());
         Get.put(TTabController());
              }),
-      home:  HomeScreen(),
+      home:  const HomeScreen(),
     );
   }
 }

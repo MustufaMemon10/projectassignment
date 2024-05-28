@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:projectassignment/src/controller/tab_controller.dart';
+import 'package:projectassignment/src/screens/product_screen.dart';
 import 'package:projectassignment/src/widgets/categories.dart';
 import 'package:projectassignment/src/widgets/search_and_sort.dart';
 
@@ -34,6 +33,7 @@ class HomeScreen extends StatelessWidget {
                 height: AppSizes.spaceBtwSections,
               ),
               /// Product Screen
+              ProductScreen(),
             ],
           ),
         ),

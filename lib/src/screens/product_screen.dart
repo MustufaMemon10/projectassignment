@@ -8,10 +8,11 @@ import '../utils/constants/Sizes.dart';
 import '../widgets/product_heading.dart';
 
 class ProductScreen extends StatelessWidget {
-  ProductScreen({super.key});
+   ProductScreen({
+    super.key,
+  });
 
-  final productController = Get.put(ProductController());
-  final tabController = Get.put(());
+  final productController = ProductController.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +20,16 @@ class ProductScreen extends StatelessWidget {
       if (productController.isLoading.value) {
         return const Center(child: CircularProgressIndicator());
       }
+      if (productController.products.isEmpty) {
+        return const Center(child: Text('No Data found'));
+      }
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ProductHeading(
-            title: productController.products[0].category.toUpperCase(),
+            title: productController.products[0].category
+                .substring(0)
+                .toUpperCase(),
             // icon: Icons.menu,
             icon: Iconsax.menu,
             products: productController.products.length.toString(),
@@ -38,8 +44,8 @@ class ProductScreen extends StatelessWidget {
             child: ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),
                 separatorBuilder: (_, __) => const SizedBox(
-                      height: AppSizes.spaceBtwItems,
-                    ),
+                  height: AppSizes.spaceBtwItems,
+                ),
                 itemCount: productController.products.length,
                 padding: const EdgeInsets.only(
                     top: AppSizes.mdlg, bottom: AppSizes.md),
@@ -54,9 +60,9 @@ class ProductScreen extends StatelessWidget {
                   );
                 }),
           ),
-          /// Products in Grid
         ],
       );
     });
   }
 }
+

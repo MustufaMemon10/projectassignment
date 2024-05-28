@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projectassignment/src/controller/product_controller.dart';
-import 'package:projectassignment/src/screens/product_search.dart';
 import '../../utils/constants/Sizes.dart';
 import '../../utils/constants/colors.dart';
 import 'package:projectassignment/src/controller/drop_down_controller.dart';

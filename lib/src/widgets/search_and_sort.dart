@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:projectassignment/src/screens/product_search.dart';
 
 import '../common/button/sort_button.dart';
 import '../controller/product_controller.dart';

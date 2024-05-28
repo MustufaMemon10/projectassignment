@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:projectassignment/src/controller/product_controller.dart';
-import 'package:projectassignment/src/widgets/product_heading.dart';
 
-import '../common/Layout/product_list_view.dart';
 import '../utils/constants/Sizes.dart';
 import '../utils/constants/colors.dart';
 

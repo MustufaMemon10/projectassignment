@@ -7,9 +7,8 @@ import 'package:projectassignment/src/widgets/search_and_sort.dart';
 import '../utils/constants/Sizes.dart';
 
 class HomeScreen extends StatelessWidget {
-   HomeScreen({super.key});
+   const HomeScreen({super.key});
 
-  final tabController = Get.put(TTabController());
   @override
   Widget build(BuildContext context) {
     final height = const MediaQueryData().size.height;
@@ -25,7 +24,7 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               /// Search bar & Sort Icon
-              const SearchBarAndSortIcon(),
+               SearchBarAndSortIcon(),
               const SizedBox(
                 height: AppSizes.spaceBtwSections,
               ),

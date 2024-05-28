@@ -24,7 +24,9 @@ class SortButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _showDropDownMenu(context),
+      onTap: () { _showDropDownMenu(context);
+      FocusScope.of(context).requestFocus(FocusNode());
+      },
       child: Container(
           padding: const EdgeInsets.all(AppSizes.md),
           decoration: BoxDecoration(

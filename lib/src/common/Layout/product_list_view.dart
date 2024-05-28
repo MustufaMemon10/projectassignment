@@ -1,16 +1,24 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../../utils/constants/Sizes.dart';
 import '../../utils/constants/colors.dart';
 
 class VerticalProduct extends StatelessWidget {
   const VerticalProduct({
-    super.key, required this.title, required this.description, required this.price, required this.imageUrl,
+    super.key,
+    required this.title,
+    required this.description,
+    required this.price,
+    required this.imageUrl,
+    this.rating = '',
   });
+
   final String title;
   final String description;
   final String imageUrl;
   final String price;
+  final String rating;
+
   @override
   Widget build(BuildContext context) {
     final height = const MediaQueryData().size.height;
@@ -18,7 +26,7 @@ class VerticalProduct extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          width: double.infinity,
+            width: double.infinity,
             padding: const EdgeInsets.all(15),
             decoration: BoxDecoration(
                 color: AppColors.white,
@@ -30,78 +38,77 @@ class VerticalProduct extends StatelessWidget {
                     offset: const Offset(0, 2),
                   ),
                 ],
-                borderRadius:
-                BorderRadius.circular(AppSizes.smallBorderRadius),
+                borderRadius: BorderRadius.circular(AppSizes.smallBorderRadius),
                 border: Border.all(
                     width: 1.0, color: AppColors.accent.withOpacity(0.2))),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child:  Image(
-                    height: 90,
-                    width: 75,
-                    image: NetworkImage(
-                        imageUrl),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                const SizedBox(
-                  width: AppSizes.md,
-                ),
-                SizedBox(
-                  width: 218,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 4.5,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image(
+                      height: 90,
+                      width: 75,
+                      image: NetworkImage(imageUrl),
+                      fit: BoxFit.cover,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        /// Product name
-                         Text(
-                         title,
-                          maxLines: 1,
-                          style: const TextStyle(
-                            color: AppColors.black,
-                            fontSize: 14,
-                            overflow: TextOverflow.ellipsis,
-                            fontWeight: FontWeight.w700,
+                  ),
+                  const SizedBox(
+                    width: AppSizes.md,
+                  ),
+                  SizedBox(
+                    width: 218,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 4.5,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          /// Product name
+                          Text(
+                            title,
+                            maxLines: 1,
+                            style: const TextStyle(
+                              color: AppColors.black,
+                              fontSize: 14,
+                              overflow: TextOverflow.ellipsis,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: AppSizes.sm,
-                        ),
+                          const SizedBox(
+                            height: AppSizes.sm,
+                          ),
 
-                        /// Product Description
-                        Text(
-                          description,
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: AppColors.black.withOpacity(0.5),
-                            fontWeight: FontWeight.w400,
+                          /// Product Description
+                          Text(
+                            description,
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: AppColors.black.withOpacity(0.5),
+                              fontWeight: FontWeight.w400,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(
-                          height: AppSizes.sm,
-                        ),
-                         Text(
-                          '\$$price',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16,
-                            color: AppColors.black,
+                          const SizedBox(
+                            height: AppSizes.sm,
                           ),
-                        )
-                      ],
+                          Text(
+                            '\$$price',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
+                              color: AppColors.black,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                )
-              ],
-            )),
+                  )
+                ],
+              ),
+            ),
         Positioned(
             top: 8,
             right: 8,
@@ -121,8 +128,24 @@ class VerticalProduct extends StatelessWidget {
                 ),
               ),
             )),
+        Positioned(
+            bottom: 15,
+            right: 14,
+            child: Center(
+              child: Row(
+                children: [
+                  const Icon(Icons.star_border_outlined),
+                  Text(
+                    rating,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 6,
+                        color: AppColors.light),
+                  ),
+                ],
+              ),
+            )),
       ],
     );
   }
 }
-

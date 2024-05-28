@@ -5,6 +5,8 @@ import 'package:projectassignment/src/models/product.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+enum SortCriteria { PriceLowToHigh, PriceHighToLow, Rating, Alphabetical }
+
 class ProductController extends GetxController {
   static ProductController get instance => Get.find();
 
@@ -16,13 +18,18 @@ class ProductController extends GetxController {
     'mobile-accessories',
     'beauty',
     'fragrances',
+    'home-decoration',
     'groceries',
     'womens-dresses',
     'skin-care',
     'vehicle',
   ];
   var selectedCategory = 'tablets'.obs;
+  final searchQuery = ''.obs;
+
   List<ProductModel> products = <ProductModel>[].obs;
+  List<ProductModel> searchedproduct = <ProductModel>[].obs;
+  List<ProductModel> sortedProduct = <ProductModel>[].obs;
   final DropDownController dropDownController = Get.put(DropDownController());
 
   @override
@@ -35,14 +42,13 @@ class ProductController extends GetxController {
   Future<void> fetchProducts(RxString category) async {
     try {
       isLoading.value = true;
-      final response = await http.get(Uri.parse('https://dummyjson.com/products/category/$selectedCategory'));
+      final response = await http.get(Uri.parse('https://dummyjson.com/products/category/$category'));
 
       if (response.statusCode == 200) {
         List<dynamic> body = json.decode(response.body)['products'];
         List<ProductModel> productList = body.map((dynamic item) => ProductModel.fromJson(item)).toList();
         products.assignAll(productList);
 
-        // Debugging: Print the product list
         if (kDebugMode) {
           print('Products fetched: ${products.length}');
         }
@@ -64,9 +70,43 @@ class ProductController extends GetxController {
   }
 
   List<ProductModel> get filteredProducts {
-    return products.where((product) => product.category == selectedCategory.value).toList();
+    return sortedProduct.where((product) => product.category == selectedCategory.value).toList();
   }
-
+  void searchAndSortProducts(String query) {
+    searchQuery.value = query;
+    sortProducts();
+  }
+  void sortProducts() {
+    // Apply sorting logic based on selectedSortCriteria and searchQuery
+    List<ProductModel> sortedList = products;
+    // Filter by searchQuery if it's not empty
+    if (searchQuery.isNotEmpty) {
+      sortedList = sortedList.where((product) =>
+      product.title.toLowerCase().contains(searchQuery.value.toLowerCase()) ||
+          product.category.toLowerCase().contains(
+              searchQuery.value.toLowerCase())).toList();
+    }
+    // Sort based on selectedSortCriteria
+    switch (dropDownController.selectedValue.value) {
+      case 'Price - Low to High':
+        sortedList.sort((a, b) => a.price.compareTo(b.price));
+        break;
+      case 'Price - High to Low':
+        sortedList.sort((a, b) => b.price.compareTo(a.price));
+        break;
+      case 'Popularity':
+        sortedList.sort((a, b) => b.rating.compareTo(a.rating));
+        break;
+      case 'Ascending-Decending':
+        sortedList.sort((a, b) => a.title.compareTo(b.title));
+        break;
+      default:
+      // Default sorting logic if no criteria selected
+        sortedList.sort((a, b) => a.id.compareTo(b.id));
+        break;
+    }
+    sortedProduct.assignAll(sortedList);
+  }
   void changeCategory(String category) {
     selectedCategory.value = category;
     fetchProducts(selectedCategory);
@@ -76,20 +116,4 @@ class ProductController extends GetxController {
     return selectedCategory.value == category;
   }
 
-  List<ProductModel> sortProducts(List<ProductModel> products) {
-    switch (dropDownController.selectedValue.value) {
-      case 'Popularity':
-        products.sort((a, b) => b.rating.compareTo(a.rating));
-        break;
-      case 'Price - High to Low':
-        products.sort((a, b) => b.price.compareTo(a.price));
-        break;
-      case 'Price - Low to High':
-        products.sort((a, b) => a.price.compareTo(b.price));
-        break;
-      default:
-        break;
-    }
-    return products;
-  }
 }

@@ -5,6 +5,7 @@ import 'package:projectassignment/src/controller/product_controller.dart';
 import 'package:projectassignment/src/widgets/product_heading.dart';
 
 import '../common/Layout/product_list_view.dart';
+import '../controller/drop_down_controller.dart';
 import '../utils/constants/Sizes.dart';
 import '../utils/constants/colors.dart';
 
@@ -12,11 +13,6 @@ class Categories extends StatelessWidget {
   Categories({super.key});
 
   final productController = Get.put(ProductController());
-  final List<String> category = [
-    'Beauty',
-    'Fragrances',
-    'Groceries',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -79,18 +75,19 @@ class Categories extends StatelessWidget {
         if (productController.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
         }
-        if (productController.filteredProducts.isEmpty) {
+        if (productController.products.isEmpty) {
           return const Center(child: Text('No Data found'));
         }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ProductHeading(
-              title:
-                  productController.filteredProducts[0].brand.isEmpty ? productController.filteredProducts[0].category.substring(0).toUpperCase():productController.filteredProducts[0].brand,
+              title: productController.products[0].category
+                  .substring(0)
+                  .toUpperCase(),
               // icon: Icons.menu,
               icon: Iconsax.menu,
-              products: productController.filteredProducts.length.toString(),
+              products: productController.products.length.toString(),
             ),
             const SizedBox(
               height: AppSizes.mdlg,
@@ -104,12 +101,12 @@ class Categories extends StatelessWidget {
                   separatorBuilder: (_, __) => const SizedBox(
                         height: AppSizes.spaceBtwItems,
                       ),
-                  itemCount: productController.filteredProducts.length,
+                  itemCount: productController.products.length,
                   padding: const EdgeInsets.only(
                       top: AppSizes.mdlg, bottom: AppSizes.md),
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    var product = productController.filteredProducts[index];
+                    var product = productController.products[index];
                     return VerticalProduct(
                       price: product.price.toString(),
                       title: product.title,

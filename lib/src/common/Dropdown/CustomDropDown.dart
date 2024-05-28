@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:projectassignment/src/controller/product_controller.dart';
+import 'package:projectassignment/src/screens/product_search.dart';
 import '../../utils/constants/Sizes.dart';
 import '../../utils/constants/colors.dart';
 import 'package:projectassignment/src/controller/drop_down_controller.dart';
@@ -8,7 +10,7 @@ class CustomDropDown extends StatelessWidget {
   CustomDropDown({super.key});
 
   final DropDownController dropDownController = Get.put(DropDownController());
-
+  final productController = ProductController.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,6 +63,7 @@ class CustomDropDown extends StatelessWidget {
                                   : AppColors.textSecondary),
                           onTap: () {
                             dropDownController.setSelectedValue(value);
+                            productController.sortProducts();
                             Navigator.pop(context);
                           },
                           trailing: Container(

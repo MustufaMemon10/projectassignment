@@ -79,6 +79,9 @@ class ProductController extends GetxController {
           product.category.toLowerCase().contains(
               searchQuery.value.toLowerCase())).toList();
     }
+    else if (searchQuery.isEmpty){
+      products.assignAll(products);
+    }
     // Sort based on selectedSortCriteria
     switch (dropDownController.selectedValue.value) {
       case 'Price - Low to High':
